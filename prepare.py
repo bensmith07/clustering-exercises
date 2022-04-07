@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+from sklearn.model_selection import train_test_split
 
 
 def prep_zillow(df):
@@ -85,3 +86,31 @@ def remove_outliers(train, validate, test, k, col_list):
     print(f'validate n = {validate.shape[0]}')
 
     return train, validate, test
+
+def train_test_validate_split(df, test_size=.2, validate_size=.3, random_state=42):
+    '''
+    This function takes in a dataframe, then splits that dataframe into three separate samples
+    called train, test, and validate, for use in machine learning modeling.
+
+    Three dataframes are returned in the following order: train, test, validate. 
+    
+    The function also prints the size of each sample.
+    '''
+    # split the dataframe into train and test
+    train, test = train_test_split(df, test_size=.2, random_state=42)
+    # further split the train dataframe into train and validate
+    train, validate = train_test_split(train, test_size=.3, random_state=42)
+    # print the sample size of each resulting dataframe
+    print(f'train\t n = {train.shape[0]}')
+    print(f'test\t n = {test.shape[0]}')
+    print(f'validate n = {validate.shape[0]}')
+
+    return train, test, validate
+
+def get_row_nulls(df):    
+    df2 = pd.DataFrame()
+    df2['n_rows_null'] = df.isnull().sum()
+    df2['pct_rows_null'] = df.isnull().mean()
+    df2 = df2.reset_index()
+    df2 = df2.rename(columns={'index': 'feature'})
+    return df2

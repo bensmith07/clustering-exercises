@@ -121,7 +121,7 @@ def get_column_nulls(df):
     df2['pct_cols_null'] = df.isnull().mean(axis=1)
     return df2
 
-def train_test_validate_split(df, test_size=.2, validate_size=.3, random_state=42):
+def train_validate_test_split(df, test_size=.2, validate_size=.3, random_state=42):
     '''
     This function takes in a dataframe, then splits that dataframe into three separate samples
     called train, test, and validate, for use in machine learning modeling.
@@ -139,7 +139,7 @@ def train_test_validate_split(df, test_size=.2, validate_size=.3, random_state=4
     print(f'test\t n = {test.shape[0]}')
     print(f'validate n = {validate.shape[0]}')
 
-    return train, test, validate
+    return train, validate, test
 
 def remove_outliers(train, validate, test, k, col_list):
     ''' 
